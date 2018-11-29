@@ -2,7 +2,7 @@
 'use strict';
 
 import PdfKitEngine from'./pdfKitEngine';
-import FontProvider from'./fontProvider';
+import FontProvider from "./fontProvider";
 import LayoutBuilder from'./layoutBuilder';
 import sizes from'./standardPageSizes';
 import ImageMeasure from'./imageMeasure';

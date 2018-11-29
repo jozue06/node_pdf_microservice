@@ -1,49 +1,15 @@
 'use strict';
 
-// import express from 'express';
-
-// const app = express();
-// app.use(express.json());
-
-// let isRunning = false;
-
-// let server;
-
-// module.exports = {
-//   start: (port) => {
-//     if(! isRunning) {
-//       server = app.listen(port, (err) => {
-//         if(err) { throw err; }
-//         isRunning = true;
-//         console.log('Server is up on port', port);
-//       });
-//     }
-//     else {
-//       console.log('Server is already running');
-//     }
-//   },
-
-//   stop: () => {
-//     server.close( () => {
-//       isRunning = false;
-//       console.log('Server has been stopped');
-//     });
-//   },
-// };
-
-
-
-
-
 import http from 'http';
 import express from 'express';
 import  path from 'path';
 import bodyParser from 'body-parser';
-import pdfMakePrinter from './printer';
+import pdfMakePrinter from './pdf/printer';
 import api from './api.js';
 
 let app = express();
-
+let isRunning = false;
+let server;
 let rootDir = path.resolve(path.dirname('.'));
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -80,8 +46,27 @@ function createPdfBinary(pdfDoc, callback) {
 
 }
 
-let server = http.createServer(app);
-let port = process.env.PORT || 1234;
-server.listen(port);
+// let server = http.createServer(app);
+// let port = process.env.PORT || 1234;
+// server.listen(port);
+module.exports = {
+  start: (port) => {
+    if(! isRunning) {
+      server = app.listen(port, (err) => {
+        if(err) { throw err; }
+        isRunning = true;
+        console.log('Server is up on port', port);
+      });
+    }
+    else {
+      console.log('Server is already running');
+    }
+  },
 
-console.log('http server listening on %d', port);
+  stop: () => {
+    server.close( () => {
+      isRunning = false;
+      console.log('Server has been stopped');
+    });
+  },
+};

@@ -20,7 +20,7 @@ router.get('/api/v1/pdf', (req, res) => {
   }, function (error) {
     res.send('ERROR:' + error);
   });
-}
+
 
 });
 
